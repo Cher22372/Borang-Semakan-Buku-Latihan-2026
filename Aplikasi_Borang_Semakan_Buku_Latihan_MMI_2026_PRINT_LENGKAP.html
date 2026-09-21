@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Borang Semakan Buku Latihan MMI 2026</title>
+<style>
+:root{--navy:#12304a;--gold:#c89b3c;--green:#176b57;--bg:#f4f7f9;--ink:#17212b;--muted:#607080;--line:#d9e0e6}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,var(--navy),#1e536d);color:#fff;padding:24px 28px;box-shadow:0 2px 12px #0002}
+header h1{margin:0;font-size:25px} header p{margin:6px 0 0;color:#dbeaf2}
+.app{max-width:1250px;margin:22px auto;padding:0 16px}
+.panel{background:#fff;border-radius:14px;box-shadow:0 4px 18px #15344b12;margin-bottom:18px;overflow:hidden}
+.panel h2{font-size:17px;margin:0;padding:15px 18px;border-bottom:1px solid var(--line);background:#fbfcfd}
+.controls{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:18px}
+label{font-weight:700;font-size:13px;color:#334653} select,input,textarea{width:100%;margin-top:7px;border:1px solid #cfd8df;border-radius:8px;padding:10px 11px;font:inherit;background:#fff}
+textarea{min-height:75px;resize:vertical}.student-tools{padding:0 18px 14px;display:flex;gap:10px;align-items:end;flex-wrap:wrap}
+.student-tools .grow{flex:1;min-width:260px}.btn{border:0;border-radius:9px;padding:10px 15px;font-weight:700;cursor:pointer}.primary{background:var(--green);color:#fff}.secondary{background:#eaf0f4;color:var(--navy)}.gold{background:var(--gold);color:#fff}.danger{background:#a63b3b;color:#fff}
+.table-wrap{overflow:auto;padding:0 18px 18px}table{border-collapse:collapse;width:100%;min-width:850px}th,td{border:1px solid var(--line);padding:9px}th{background:#edf3f6;text-align:center;font-size:12px}td:first-child{text-align:center;width:52px}.name-cell{font-weight:600}.score-select{margin:0;padding:7px}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 18px 18px}.stat{border:1px solid var(--line);border-radius:10px;padding:12px;background:#fafcfd}.stat b{display:block;font-size:20px;color:var(--navy);margin-top:4px}
+.actions{display:flex;gap:10px;padding:16px 18px;border-top:1px solid var(--line);flex-wrap:wrap}
+.hint{font-size:12px;color:var(--muted);padding:0 18px 16px}.status{font-size:13px;color:var(--green);font-weight:700}
+@media(max-width:850px){.controls{grid-template-columns:1fr 1fr}.summary{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.controls{grid-template-columns:1fr}.summary{grid-template-columns:1fr}}
+/* PRINT */
+@media print{
+  body{background:#fff}.no-print,header .sub,.actions,.student-tools,.hint{display:none!important}
+  .app{max-width:none;margin:0;padding:0}.panel{box-shadow:none;border:0;margin:0}.panel h2{display:none}
+  #formPanel{display:block}.controls{grid-template-columns:repeat(4,1fr);padding:0 0 10px;gap:8px}
+  input,select,textarea{border:0;padding:2px;margin-top:2px;background:transparent}
+  .table-wrap{padding:0}table{min-width:0;font-size:10px}th,td{padding:5px}.score-select{appearance:none;border:0;padding:0;text-align:center}
+  .summary{padding:10px 0}.stat{padding:6px}.stat b{font-size:14px}
+  .print-title{display:block!important;text-align:center;margin-bottom:8px}.print-title h1{font-size:17px;margin:0}.print-title p{margin:3px 0;font-size:11px}
+  .print-info{display:grid!important;grid-template-columns:1fr 1fr;gap:3px 14px;text-align:left;border:1px solid #999;padding:7px;margin:7px 0 9px;font-size:10px;line-height:1.35}
+  .print-info b{font-weight:700}.print-info span{font-weight:400}
+  .signature{display:block!important}
+}
+.print-title{display:none}.signature{display:none}.print-info{display:none}
+</style>
+</head>
+<body>
+<header>
+  <h1>Borang Semakan Buku Latihan Pelajar — MMI 2026</h1>
+  <p class="sub">Aplikasi pengisian, simpanan dan cetakan borang berdasarkan pembahagian data dalam fail asal.</p>
+</header>
+
+<div class="app">
+<section class="panel no-print">
+<h2>1. Maklumat Borang</h2>
+<div class="controls">
+<label>Tingkatan / Kelas<select id="tingkatan"></select></label>
+<label>Jantina<select id="gender"><option value="L">Lelaki</option><option value="P">Perempuan</option></select></label>
+<label>Nama Guru<select id="guru"></select></label>
+<label>Mata Pelajaran<select id="subjek"></select></label>
+<label>Pencerapan<select id="cerapan"></select></label>
+<label>Tajuk / Buku Latihan<input id="tajuk" placeholder="Contoh: Buku Latihan Bab 1–3"></label>
+<label>Nama Penyemak<input id="penyemak"></label>
+<label>Tarikh<input id="tarikh" type="date"></label>
+</div>
+</section>
+
+<section class="panel">
+<div class="print-title">
+<h1>MAAHAD AL MASHOOR AL ISLAMI</h1>
+<p>BORANG SEMAKAN BUKU LATIHAN PELAJAR — 2026</p>
+<div class="print-info">
+  <div><b>Tingkatan / Kelas:</b> <span id="pTingkatan">—</span></div>
+  <div><b>Jantina:</b> <span id="pGender">—</span></div>
+  <div><b>Nama Guru:</b> <span id="pGuru">—</span></div>
+  <div><b>Mata Pelajaran:</b> <span id="pSubjek">—</span></div>
+  <div><b>Pencerapan:</b> <span id="pCerapan">—</span></div>
+  <div><b>Tajuk / Buku Latihan:</b> <span id="pTajuk">—</span></div>
+  <div><b>Nama Penyemak:</b> <span id="pPenyemak">—</span></div>
+  <div><b>Tarikh:</b> <span id="pTarikh">—</span></div>
+</div>
+</div>
+<h2>2. Senarai Pelajar & Skor</h2>
+<div class="student-tools no-print">
+  <label class="grow">Cari nama pelajar
+    <input id="studentSearch" placeholder="Taip nama untuk menapis...">
+  </label>
+  <button class="btn secondary" onclick="fillNext10()">Isi 10 nama pertama</button>
+  <button class="btn secondary" onclick="clearStudents()">Kosongkan nama</button>
+</div>
+<div class="table-wrap">
+<table id="studentTable">
+<thead><tr><th>BIL.</th><th>NAMA MURID</th><th>SKOR</th></tr></thead>
+<tbody></tbody>
+</table>
+</div>
+<div class="summary">
+<div class="stat">Jumlah pelajar dalam borang<b id="count">0</b></div>
+<div class="stat">Jumlah skor<b id="total">0</b></div>
+<div class="stat">Purata skor<b id="avg">0.00</b></div>
+<div class="stat">Tahap keseluruhan<b id="level">—</b></div>
+</div>
+</section>
+
+<section class="panel">
+<h2>3. Rumusan & Pengesahan</h2>
+<div class="controls">
+<label style="grid-column:span 2">Ulasan Penyemak<textarea id="ulasan" placeholder="Masukkan ulasan penyemak..."></textarea></label>
+<label style="grid-column:span 2">Tandatangan Penyemak<textarea id="tandatangan" placeholder="Nama / ruang tandatangan (boleh ditulis selepas cetak)"></textarea></label>
+</div>
+<div class="actions no-print">
+<button class="btn primary" onclick="saveForm()">💾 Simpan Borang</button>
+<button class="btn secondary" onclick="loadForm()">↻ Muat Semula</button>
+<button class="btn gold" onclick="syncPrintInfo();window.print()">🖨️ Cetak Borang</button>
+<button class="btn danger" onclick="resetForm()">Reset</button>
+<span id="status" class="status"></span>
+</div>
+<div class="hint no-print">Tip: pilih tingkatan dan jantina dahulu. Nama pelajar akan datang daripada senarai pembahagian asal. Butang <b>Cetak Borang</b> menggunakan fungsi cetak pelayar dan boleh pilih PDF atau pencetak sebenar.</div>
+</section>
+
+<section class="panel no-print">
+<h2>4. Skala Semakan</h2>
+<div class="table-wrap">
+<table><thead><tr><th>Skala</th><th>Pernyataan</th></tr></thead>
+<tbody id="scaleBody"></tbody></table>
+</div>
+</section>
+</div>
+
+<script>
+const DATA = {"tingkatan": ["1 IS", "1 IN", "1K", "1S", "2 IS", "2 IN", "2K", "2S", "3 IS", "3 IN", "3K", "3S", "4 AB", "4 AK", "4 AJ", "4 AF", "5 AB", "5 AK", "5 AJ", "5 AF", "STAM"], "guru": ["SITI ALHA BINTI HJ RAMLI", "SOBRI BIN MD NOR", "ABDUL RASHEED BIN NAGOORGANY", "MOHD ZAMRI BIN NOH@MOHD NOH", "MOHD SHUKRI BIN ABDUL RAZAK", "IBNI HAJAR BIN ABDUL WAHAB", "ZALINA BINTI MD ZAIN", "AZRIN BINTI SAIDIN", "SUHAIDA BINTI ABDULLAH", "NORMAH BINTI MOHD AFFINDI", "NAZRINAH BINTI NAHOOR MEERA", "ZARINA BINTI YUNUS", "ABDUL AZIM BIN ABD KADIR", "ABDUL HAFIZ BIN ISMAIL", "AZHARI BIN AHMAD", "AZLIANA BINTI MD ZAID", "CHE MOHD FAKHRUL RAHIMI BIN RASIT", "NOR FARIZAH HANIM BINTI OMAR", "ILI SUHAILI BINTI ISHAK", "IZZATY BINTI ISHAK", "JUSMIRA AIDA BINTI JOHARI", "KHAIRUL AZHA BIN HALIM", "FARAH AUNI BINTI MOHD KHOIRI", "MARDIANA BINTI SHAHRIL", "MOHD HIJAZI BIN ABU HASSAN", "MUHAMMAD AMIRUL BIN ABDUL RAHMAN", "MUHAMMAD FAISAL BIN ABD RAMLAN", "MUHAMMAD FAIZ BIN RAMLI", "MUHAMMAD HAMZI BIN JAMALUDIN", "MUHAMMAD NASARUDDIN BIN AZMI", "NADIA HANIM BINTI JAAFAR", "NOOR ASLIDA BINTI RAMLI", "NOOR HIDAYAH BINTI MOHAMED NOR", "NOORUL SYUHADA BINTI NOORDIN", "NORAZILA BINTI RAMLI", "FATIMAH AZ-ZAHRA BINTI HASSAN", "NUR AIN SHUHADA BINTI MOHD ZAMRI", "NUR IZZAH BINTI AWANG", "NUR WARDAH BINTI HAMZAH", "NURUL FARHANA BINTI YAHAYA", "NURULIMAN BINTI ZULHISHAM", "ROHIZA BINTI MAT RASHID", "ROSNIZA BINTI AB RAZAK", "FATIN NABILAH BINTI ZAINUDDIN", "SITI ESHAH BINTI HUSSAIN", "SITI NABILAH BINTI HASSAN", "SITI NOR ADILA BINTI DAUD", "SITI NORAINI BINTI MOHD NOR", "SYAZWANI BINTI ZAKARIYA", "NUR'AIN SYAFIQAH BINTI AZIZI", "NUR AFIQAH BINTI HISHAMUDIN", "NOORFARHANA BINTI ABDULLAH", "MOHAMAD AMIN BIN MOHD SHOKRI"], "subjek": ["BM", "BI", "SEJ", "SN", "MM", "MT", "GEO", "PA", "PERNIAGAAN", "FZK", "KIMIA", "BIO", "UAD", "ASY", "LAM", "MUI", "AWB", "QT", "PSV", "FEQAH FARAID", "TAUHID MANTIK", "TAFSIR ULUMUHU", "HADIS MUSTOLAH", "NAHU SOROF", "INSYAK MUTOLAAH", "ADAB NUSUS", "ARUDH QAFIAH", "BALAGHAH", "PJPK", "ASK", "RBT", "KKQ"], "skor": ["LEMAH", "SEDERHANA ", "CEMERLANG"], "cerapan": [1, 2], "students": {"1": {"L": ["AHMAD NAQIUDDIN BIN MUHAMAD ASRI", "AHMAD SYAUQI BIN DAUD", "ALI ARRAYHAN MUHAMMAD BIN MUHAMMAD FUAD AZFAR", "AMMAR RAHIMI BIN SABBERI", "AZFAR NASRULLAH BIN NOR AZAM", "FAHEEM YUNUS BIN KHAIRUL HAKIMIN", "FAQEH NAS'RULLAH HUSSAYN BIN MOHAMAD HAFIZ", "HAFIY NUR IMAN BIN NOOR AZMAN", "IZZ WAFIY MIKHAIL BIN MOHD TARMIZI", "MOHAMAD ARIQ DZAKWAN BIN MOHD ZULHAMIROS", "MUHAMAD AFIF MUSTAQIM BIN MUHAMAD RITHAUDEEN", "MUHAMAD AIDID ARSYAD BIN MUHAMAD FIKRI", "MUHAMAD SAIFULDIN BIN MOHD RASHIDI", "MUHAMMAD ADAM FAHIM BIN HASRUL AZWAD", "MUHAMMAD AFIQ ZIQRI BIN MOHD JASNI", "MUHAMMAD AMMAR AQASHA BIN MOHD THARIQ", "MUHAMMAD AMSYAR SYAFI BIN MOHAMAD SYAIFUL", "MUHAMMAD AMZAR BIN MOHD AZIZIE", "MUHAMMAD ANNAS SUFI BIN MOHD TAMMEZE", "MUHAMMAD DARWISY SUFI BIN MOHD SYAZWAN SUFI", "MUHAMMAD FAHIM BIN ROSLI", "MUHAMMAD FAHIM WAFIYUDDIN BIN MOHAMMAD FARKHAN", "MUHAMMAD FAKHRY HANIIF BIN HAILMI", "MUHAMMAD HADIFF BIN SHAHRIN FAHMI", "MUHAMMAD HAZIM HILMI BIN MOHD HERMY", "MUHAMMAD HAZIQ ZIQRI BIN MOHAMMAD ZHAKIR", "MUHAMMAD IZZ IRFAN BIN MUHAMAD SYAHRIR", "MUHAMMAD JAFNI KHALISH BIN MOHAMAD IDRIS", "MUHAMMAD WAFIY FAWWAZ BIN MUHAMMAD AFIQ", "SALMAN AL-FARISI BIN KHAIRULANAM", "UWAIS QARNI BIN AHMAD KHAIDHIR", "ZAYYAN HAKIMI BIN MOHD KAMARUZAMAN", "'ABDULLAH ISKANDAR BIN BAHARUDIN", "AHMAD FATEH MUQRY BIN MOHD ZAIHAM", "AHMAD MUJADDID AL-HAKIM BIN AL-ABRAR", "AHMAD MUSLEHUDDIN BIN MOHD YAZIF", "AMIR IRFHAN BIN AHMAD KAMAL", "AMMAR HARIS BIN MOHD HASREE", "DANISH RIZQY BIN ABDUL HADI", "FARHI HAYYAN BIN KHAIRUL HILMI", "IMTIYAZ BIN EZZAR", "IRFAN MISHARY BIN YUSRI", "MOHAMMAD ALIF FIRDAUS BIN HARIS", "MUHAMMAD ADAM QAYYUM BIN RUSLI", "MUHAMMAD AIDH AQEEL BIN MOHD RIDZUAN", "MUHAMMAD AMSYAR FAWWAZ BIN MOHD AZRUL", "MUHAMMAD AZEEM RIFQI BIN MOHAMAD AZRIN", "MUHAMMAD DARWISH SYAHMIE BIN MOHD ZAIDI", "MUHAMMAD FARHAN BIN MOHAMAD SAHRIL", "MUHAMMAD HABIBULLAH BIN MUHAMMAD HELMI", "MUHAMMAD HADIF HARRAZ BIN ROHAIMI", "MUHAMMAD HARRAZ BIN MOHAMED HAFIS", "MUHAMMAD HUSEIN BIN MOHD NAJIB", "MUHAMMAD JAZMEE AKRIMIE BIN JOHARI", "MUHAMMAD LUQMAN HAZIMI BIN MOHD RAFA'EE", "MUHAMMAD MUJIBULLAH BIN ZABIDI", "MUHAMMAD NAWFAL BIN MOHD SHAMIZAR", "MUHAMMAD RAFIUDDIN BIN MOHD RIDZUAN", "MUHAMMAD TAQIUDDIN BIN MOHD FETRI", "MUHAMMAD UKASYAH MUHSIN BIN MOHD HANIF", "MUHAMMAD WAFIY AKMAL BIN ZULKIFLI", "NASIH HAMMADAH BIN YUSOF", "SUHAIB BIN ZAYD"], "P": ["AISHA NABILAH IRDINA BINTI NASRUL AFNAN", "ALISHA MARDHIYAH BINTI ZAIHASNAN", "ALYA ZAHRA BINTI ROZAIDEE", "AUNI HUMAIRA BINTI ROZAINI", "AUNI NADRA BINTI MOHD HAIRUS IZMAN", "DELISHA AMANDA BINTI MUHAMMAD FAIZAL", "DHIA DAMIA BINTI MOHD SUKRI", "FIRZANAH SAFIYYAH BINTI MOHD FIRDAUS", "HANA WAFIQAH BINTI MOHAMED BANDENAWAS", "HUMAIRA BINTI ZOL EFFENDI", "IFFAH HAMIZAH BINTI MUHAMMAD FAWWAZ", "KHAIRINA UZMA BINTI MOHD ZAIRUL AMIZAN", "MARYAM ATHIRAH BINTI MOHAMMAD SYUKUR", "MUAZZAH NAJLA BINTI MOHAMED NOOR NIZAM", "NATASYA AMANI BINTI AMIR", "NUR AAFIA AMNAA BINTI SYAHARIJAN", "NUR ADILIA AMANINA BINTI MD ZAHARI", "NUR ALYAA FASIHAH BINTI MOHD ALIF", "NUR ELYSA IMANINA BINTI MOHD HASHIM", "NUR IMAN SUFIYYA BINTI FARIQ ASRHAF", "NUR LAILATUL QADAR BINTI MOHD PADZIL", "NUR MAS AMANI BINTI MOHD RODI", "NUR QALISHA ZAHRA BINTI MOHD AFFENDI", "NUR SYAFINA BINTI AZMI", "NURHADIRA BINTI MUHAMMAD NOOR HIDAYAT", "NURUL AMNI BINTI SALEHHUDIN", "NURUL MARDHIYAH BINTI MOHAMMED ALI", "QASEH IZZ DAMIA NASUHA BINTI ISHAK", "SITI AMNI SYIFA' BINTI MUHAMMAD NAIM ZAIMI", "WAN AISYAH SUFIAH BINTI WAN MUJTAHIDDIN", "WAN THOYYIBATUL SUFIYA BINTI WAN MOHD SAIDI", "AIMY AZ ZAHRAH BINTI AZRAYHAFIZI", "AINUL MUSFIRAH BINTI AZAHARUDIN", "AIRA BASYIRAH BINTI MUHD PIRDAUS", "AIRA RANIA BINTI MOHD SHAH", "AMNI ALEEYAH BINTI MUHAMMAD NAZWAN", "ASFAHANA MIRZA BINTI MUHAMMAD IMRAN", "CAHAYA MEDINA BINTI IBRAHIM", "DHANIYAH INARAH BINTI SAHARUDDIN", "DHIYA' FIRZANAH HAFIYA BINTI FIRDAUS", "HAMIZAH HUMAIRA BINTI MOHD SHAIFOLAZAM", "HUSNA AHMAD SABRI", "IBTISAM HANNA BINTI HAMIZUL", "IMAN NUHA BINTI SYAHRUL HISYAM", "INTISOR HUDA BINTI HAMIZUL", "IZZ QISYA IRDINA BINTI MOHD IDZWAN", "LUTHFIYYATUL FAQIHAH BINTI ERMAN HAZLAN FAIZAL", "MARHA MUYASSARAH BINTI MOHD IZRIE", "NUR ADRIANA QAIRIN BINTI MUHD NUR AMIRZA", "NUR AINA NUHA BINTI MOHD ZAIRI", "NUR ARFAH BINTI MOHD RUSHDAN", "NUR DAMIA QHALISYA BINTI KAMARUL AZHAR", "NUR DHIYA MYIAZARA BINTI NORSHAHNIZAM", "NUR KHAIRA DELISHA BINTI AMINUDDIN", "NUR QAIRAA SAFEYYA BINTI IQBAL HARITH", "NUR RANIA HUMAIRA BINTI MUHAMAD SOFFIAN", "NUR SOFEA DAMIA BINTI KHAIRUL ANWAR", "PUTRI NUR AIRIS QALESYA BINTI MOHAMAD YUSRI", "QAYLAH MARYAM BINTI MOHD AMIZAN", "SHARIFAH EL NUR HAMRAA BINTI SYED ASRAF SHAFANI", "UFAIRAH ALABIDAH BINTI ABDUL GHAFAR", "ZULFA BINTI ZAHAR"]}, "2": {"L": ["AFIQ HARITH BIN MOHD SHAHRIN", "AHMAD FAWWAZ BIN ISWANDI", "AHMAD HUMAIDI BIN NORZLI", "AHMED AL-FAYYAD BIN MUHAMMAD SYUKRI", "KHALISH NAUFAL BIN MOHD KHAIZUL NIZAR", "MOHAMAD ANIQ ANAQI BIN MOHAMAD TAUFIK", "MUAZ FAHMIE BIN AHMAD AIZUDDIN", "MUHAMAD AFFIQ DARWISYH BIN MUHAMAD ABDUL HADI", "MUHAMMAD AIMAN DANIEL BIN MOHD ABDULLAH", "MUHAMMAD AKIF NAUFAL BIN MOHD YUSRI", "MUHAMMAD AMMAR BIN AHMAD FAKHRI", "MUHAMMAD AMMAR RAYYAN BIN MUHAMMAD TERMIDZI", "MUHAMMAD AMSYAR BIN SYAMIZAM", "MUHAMMAD ANAS DARWISY BIN ROHAIMIZAN", "MUHAMMAD AQIL IMADUDDIN BIN ISMAIL", "MUHAMMAD ARIF ZUHDI BIN MOHD SHAHARIL", "MUHAMMAD AZFAR ZAFRAN BIN MOHD.AFANDI", "MUHAMMAD FATHI BIN ALRIZUADY", "MUHAMMAD FAWZAN BIN AHMAD BAHARUDDIN", "MUHAMMAD FIROS AFNAN BIN SAIFUL AZHAR", "MUHAMMAD HADIF NAJWAN BIN MOHD FIRDAUS", "MUHAMMAD HAFIY ZIKRI BIN MUHAMMAD ANIS", "MUHAMMAD HAZIM BIN ZAFFAR", "MUHAMMAD HIDAYAT BIN MOHAMAD ARIFF", "MUHAMMAD KAHIL AISAR BIN SHAMIRUDIN", "MUHAMMAD MUAZ BIN MOHD MAHDY", "MUHAMMAD NURHAYYAN BIN HUZAIMI", "MUHAMMAD QALIFF ILMAN BIN M SHAROL NASIRUDIN", "MUHAMMAD SALMAN AL FARISI BIN MUHAMAD FAIEZAL", "MUHAMMAD SIBHI BIN MOHAMAD SHAIFUL", "MUHAMMAD SYAKIRIN BIN BADRUL NIZAM", "MUHAMMAD ZIQRI BIN ZAIHASNAN", "RIFQI IMAN BIN RAO SURAIDI", "SYAHMI RAYYAN NAUFAL BIN SHAHIZAL", "ABDULLAH MU'ADZ BIN MUHAMMAD HELMI", "AFIF NUFAIL BIN MUHAMMAD FAIZAL", "AFUAN MUHAMMAD AKMAL BIN ABDUL GHAFFAR", "AHMAD HADI BIN ILYAS", "AHMED ARIA BIN HARUJAN", "AMIR SYAHMI BIN MOHAMAD ZAINI", "ARRAYYAN BIN SAFIROL IMAN", "CHEK AISY MIFZAL BIN CHEK JAFRI", "DANIYAL AKASYAH BIN MOHD FIRDHAUS AKASYAH", "MOHAMMAD EREZA RIZKY BIN NOOR EFFENDIE", "MOHAMMED BIN MOHD GHAZALI", "MUHAMAD AIRELL ZAFFRAN BIN AIZAT", "MUHAMAD HUZAIFAH BIN MOHAMAD JAHUL HASSAN", "MUHAMMAD ADAM AMSYAR BIN ALIFF ASHRAFF", "MUHAMMAD AMAR MUSTAQIM BIN MOHD FARIF", "MUHAMMAD AMMAR BIN MUHAMAD YASIR", "MUHAMMAD AMMAR HANNAN BIN MOHAMAD RIDZUAN", "MUHAMMAD DHIYAUDDIN BIN NUHAIRI", "MUHAMMAD FATHUL JIHAD BIN MOHD NASRUL", "MUHAMMAD HAIKAL RAYYAN BIN MOHD HUSNI", "MUHAMMAD IRFAN NAQIB BIN RAZIS", "MUHAMMAD ISYRAFF HAFIY BIN AZMAN", "MUHAMMAD LUTFI HADI BIN MOHD ZAMRI", "MUHAMMAD NAUFAL BIN MOHAMED NOOR NIZAM", "MUHAMMAD NAUFAL BIN MOHD NASSIR", "MUHAMMAD UMAIR ANSARI BIN HAMIZUL", "MUHAMMAD UWAIS BIN MOHD HAMDAN", "MUHAMMAD WAFIY DARWISYH BIN TAUFIQ", "MUHAMMAD ZHARFAN HAFIY BIN AZAM", "RAYQAL HARRAZ BIN MOHD KHAIRUNIZAN", "THORIQ ZIYAD BIN ZAINUDDIN", "UMAR BIN MOHD FAHMI"], "P": ["ADNI HUMAIRA BINTI MOHD NOOR HISHAMUDDIN", "AESYAL HANI BINTI MOHD HAFIZEE", "AFFAF BINTI HAZIM", "AIRIS SAFIYYAH BINTI MOHAMMAD SYAMIM", "AL - AMNI ZAHRA BINTI MUHAMAD ZAMRI", "ANISAH BINTI MOHAMMAD RAZAK", "AUFFA BINTI MOHD SAIFUL MAHATHIR", "AUNI AWFIYA BINTI YASSIR LUTFI", "HANA HUMAIRA BINTI RIDZUAN", "NUR AIMY SOLIHAH BINTI AMINUDIN", "NUR AIN SALSABILA BINTI ZUL AZRI", "NUR AINULHUSNA BINTI MOHAMMAD RASIDI", "NUR ALEEYA IRDINA BINTI ISLAKHUDIN", "NUR ALIFAH IELYANA BINTI ABD MUHAIMIN", "NUR ALYSHA KAISARA BINTI IHSAN", "NUR ANIS FARHANA BINTI AZLI", "NUR AQILAH DARWISYAH BINTI KAMAL", "NUR DINA NABIHAH BINTI MUHAMAD NIZAM", "NUR FATHIYYAH YUSRA BINTI MOHD RIZAL", "NUR IZZARRA QISTINA BINTI RAZLAN", "NUR RAUDHATUL JANNAH BINTI MOHD SOBRI", "NUR ZAHRATUN NISA BINTI MOHD SHUKERI", "NURFARAH ADRIANA BINTI NORDIN", "NURIN ALEEYA SAFIYYA BINTI MAZLIZAM", "NURIN IZZATUL SYUHADAH BINTI INDRA", "NURSAFIYYATUL RASYADAH FAQIHAH BINTI RUSHIDI", "NURUL ALIAH INSYIRAH BINTI NORDIN", "NURUL BALQIS BINTI SUHAMI", "QUEMAIRA NUR QAIREEN BINTI MOHD AZMAL", "SYAZA SAFIYA BINTI MOHD SYUKRI", "A'INUL MARDHIAH BINTI MOHD SHAH RIN", "ARISSA HANAN BINTI AZIZUL", "ILHAM FAIZAH BINTI MUHAMMAD FAWWAZ", "IMAN AMANI BINTI HARRISZAL", "MAWADDAH AUNI BINTI MOHD SABRI", "NAURAH IRDINA BINTI MOHD HAFNI AZUARDI", "NUR AINAA AMANI BINTI MOHAMMAD KHAIRI", "NUR ALYA YASMINE BINTI MOHD YUSFIZAL", "NUR AMEERA SAFIYYA BINTI RAZALI", "NUR BATRISYIA BINTI MOHD HAFIZ", "NUR ERYNA DELISHA BINTI NASRULHADI", "NUR FADHILAH BINTI HAZIZAN", "NUR FAIRUZ HUMAIRA BINTI HAMBALI", "NUR HUSNINA BINTI EMRAN", "NUR IFFAH SOFEA BINTI MUHD KHAIRUL HAFIZ", "NUR ISMA MADIHA BINTI NUR HISYAM", "NUR JANNATUL IMANI BINTI AHMAD EFFENDI", "NURUL AFRINA BINTI AHMAD DZIA'UDDIN", "NURUL IZZATI BINTI MUHAMMAD RUSDI", "NUSAIBAH BINTI MOHAMMAD ANUAR", "QAIREEN NUR ALISHA BINTI AHMAD MURSYIDI", "QALESYA HANNA BINTI MUHAMMAD HELZRI", "RABIATUL ADAWIYAH BINTI MOHAMAD NIZAR", "RAJA NUR IZZAH SUMAYYAH BINTI RAJA HASHIM", "SAIDATUL SYAFIQAH BINTI SAZALI", "SITI NUR AZZALEA BINTI NOOR AZLAN", "SYAHINDAH BAIDURI BINTI MOHAMAD HAIROL", "ZATUL IMTINAN BINTI AHYA"]}, "3": {"L": ["ABDUL HAKEEM BIN ABDUL KARIM", "ABDULLAH NASEH 'ULWAN BIN MOHD SHAHRUL", "ADAM FATHI BIN MOHD ADIB", "AFIQ HAIQAL BIN MOHD SHAHRIN", "ARIF IZZ ZUHAIR BIN MOHAMAD ASMADI", "ASHABUL YAMIN BIN MOHD RUSHDAN", "DAARWISH BIN MUHAMMAD HAZIF", "DARWISY BIN AZLIM", "HAFIY HAIMADI BIN MOHD IZRIE", "MOHAMAD DANIEL YUSRI BIN MOHAMAD HAZWAN", "MUHAMMAD ADIB SYARHAN BIN AZMI", "MUHAMMAD AFIF RIFQI BIN ABU BAKAR", "MUHAMMAD AFNAN BIN MOHD HAIROL", "MUHAMMAD AL-AMIEN BIN AZHAR", "MUHAMMAD ALMAHDY BIN ALAM SHAHAR", "MUHAMMAD ANDIKA FARIZ BIN AHZAL FARIZ", "MUHAMMAD ASYRAF FURQAN BIN NORSHAHIDAN", "MUHAMMAD BIN JAHURI", "MUHAMMAD FAHMI RABBANI BIN SUHAIL AMRI", "MUHAMMAD FIKHRUL HASIF BIN ZAIDI", "MUHAMMAD HAFIY BIN FAIZAL", "MUHAMMAD ISYRAF NAZIM BIN SAZALI", "MUHAMMAD RAYYAN MIKAIL BIN MOHD HAFIZ", "MUHAMMAD SHAFI BIN MOHAMAD SHAIFUL", "UMAR AASIF BIN IBNI HAJAR", "WAFIE AZAM REEFQI BIN MOHAMAD FARIZAN", "ABDUL HARIS MURSYIDI BIN AHMAD MUSTAFFA KAMAL", "ABDUL QAYYUUM BIN AZIZI", "AHMAD ALIF AFY BIN AHMAD SHAUQI", "AHMAD NASRUL HAIDHAR BIN AHMAD ZULRISMAN", "AHMAD NAUFAL BIN AHMAD RIZAL", "AMAR HAANIF IZZAN BIN MOHD ZAID", "MOHAMAD QAWIYYUL HAZIQ BIN MOHD NIZAM", "MUHAMAD IKHWAN FITRI BIN ROHAIZAN", "MUHAMMAD ADIL HAMDANI BIN HANIF AZMIR", "MUHAMMAD ALIUDDIN HASIF FITRI BIN ASHRAB ALI", "MUHAMMAD AMMAR FARIS BIN MUHAMAD BOKHARI", "MUHAMMAD ARYAN ZIKRY BIN MOHD FAIZAL", "MUHAMMAD ASYRAF BIN AZHAR", "MUHAMMAD DINIY BIN HASRUL AFFENDY", "MUHAMMAD FARIS BIN SYFUL NIZAM", "MUHAMMAD HAFIEZI BIN MOHD LIZAM", "MUHAMMAD HARIZ DARWISY BIN JAMALUDIN", "MUHAMMAD IMAN NUR HASIF BIN SHARUL NIZAM", "MUHAMMAD IRFAN ISKANDAR BIN SAZRUL HISYAM", "MUHAMMAD NUQMAN BIN MOHAMED NOOR NIZAM", "MUHAMMAD QAYYIM EMIR BIN JOHARI", "MUHAMMAD QAYYUM BIN MOHD AZAN", "MUHAMMAD SAFWAN BIN SAIPUL HIDAYAT", "MUHAMMAD SHAKIL MUHAIMIN BIN MOHD RIDZWAN", "MUHAMMAD UWAIS AL QARNI BIN ABU HASSAN", "PUTRA MUHAMMAD IZZ HAFEEY BIN MOHAMAD YUSRI", "SUHAIL BIN MOHD HAFIZIE", "UWAIS ALQARNI BIN ABDUL GHAFAR"], "P": ["AFAF BINTI NASRULPATA", "ANEESA INSYIRAH BINTI MUHAMMAD ANIS", "DARWISYAH SYAMIMI BINTI MOHAMAD FAUZI", "DIYA BASHIRAH BINTI FAIZAL", "FATHIMAH AZ ZAHRAA BINTI RAYNY", "FATIMAH AZ-ZAHRA BINTI MOHD FIRDAUS", "HANAAN BASHIIRAH BINTI NORHISAM", "IRDINA SOFEA BINTI SHAFIRUL", "IZYAN NAJIHAH BINTI MUHAMMAD FAWWAZ", "JUNNUR SHARMILA IZZATI BINTI JUMMAQ KHAN", "NORALIA AMANI BINTI ABDULLAH", "NUHA NAWRA BINTI YASSIR LUTFI", "NUR ALEEYA DAMIA BINTI MOHAMAD SUHAIMI", "NUR AMNI BINTI MOHD ARIF", "NUR AMNI IMAN BINTI LUKMAN", "NUR AUNI NABILAH BINTI MOHAMAD RASHDEE", "NUR AWATIF HANANI BINTI MOHAMAD FAIZAL", "NUR BATRISYIA RAUDHAH BINTI ABDUL HALIM", "NUR HANIE BINTI MUHAMAD HAMUDI", "NUR HUSNA ZAKIRAH BINTI MOHD HASBULLAH", "NUR ISMIDA BINTI MD IDROSS", "NUR IZZ ZAIYANIS BINTI MOHD TARMIZI", "NUR KHAIRUNSHUHADA BINTI ROSMAINI", "NUR NAFISAH BINTI MOHD SHUKRI", "NUR QASDINA BINTI HISHAMMUDIN", "NUR SANIYYA HUMAIRA BINTI AHMAD SAFUAN", "NUR SUMAYYAH BINTI SHAHUL HAMID", "NUR ULFAH WADHIHAH BINTI ZUWAIRI", "NURAIN NABIHAH BINTI SHAMSUL RIJAL", "NURUL IZZATY BINTI BAHERUNZAMAN", "SYARHA BINTI ZAYD", "SYIFA' ANNUR BINTI AHMAD SYARIFUDDIN", "WAN TAQWIYAH SYIFA BINTI WAN MOHD SAIDI", "AISYAH AMANI BINTI ROZAIMI", "ANIS MUSFIRAH BINTI AKBAR ALI", "AUNI NUR DARWISYAH BINTI MOHD AZHAR", "CAHAYA IMAN BINTI CIK MOHD RAFIZI", "FUDHLA BINTI ZAHAR", "HANNAN IMTIAZ BINTI AZMAN", "HUSNA SOFIYYAH BINTI MOHD SHAFFI", "NAJIHATUL HANNAH BINTI MD ROZAINI", "NUR AIMI NAJIHAH BINTI MUHAMMAD HISYAMFIKRI", "NUR AINA HUMAIRA BINTI MOHAMMAD RASIDI", "NUR ALYA RAUDHAH BINTI MOHAMAD ZAKI", "NUR ALYAA MAISARAH BINTI MOHD KHALID", "NUR ALYAA UMAIRAH BINTI MOHD KHALID", "NUR AMNI AULA BINTI AHMAD NASRI", "NUR ATHIRAH BINTI AHMAD TAUFIQ", "NUR DAMIA QALESYA BINTI ZUL IZZI", "NUR FIDA AISYI BINTI MOHD ZAWAWI", "NUR HANNAH BINTI SHAHRIZAL", "NUR IMANINA BATRISYIA BINTI MOHD FAUZI", "NUR IMANISA AINA BINTI MOHD HALIL", "NUR IRDINA QIBTYYAH BINTI ARMIZI", "NUR IZDAMIA DAYANA BINTI MOHAMAD IZWAN", "NUR TASNEEM HUMAIRA' BINTI MOHAMAD TAUFIKH", "NURSAFIYA NASUHA BINTI MOHAMAD NIZAM", "NURUL HANNAH BINTI MOHD HAMDAN", "NURUL INSYIRAH BINTI MOHD FARID EFFENDY", "NURUL IRDINA SAFIAH BINTI MOHD IKHWAN", "SITI NUR INSYIRAH BINTI ZALMI", "SUMAIYAH BINTI MOHD FAHMI"]}, "4": {"L": ["ABDUL HAZIQ LUQMAN BIN ABDUL HALIM", "ASBIR AZKI BIN MOHD ROKHSANI SHARIR", "MUHAMMAD FARIS IMAN BIN ABDULLAH TAIM", "MUHAMMAD THAQIF BIN ERMAN HAZLAN FAIZAL", "MUHAMMAD WASIM SYATHIR BIN AZIZI", "MUHAMMAD ZAKHRUL WAFIY BIN MUHAMMAD FIRDAUS", "WAN THAQIF SYAFI BIN WAN MOHD SAIDI", "ADAM HEIQAL BIN KHAIRUL NIZAM", "AHMAD NURMUHAMMAD BIN FAIZAL", "AIMAR HAIDAR BIN KHURSANI", "CHEK AIRIQ MUQRI BIN CHEK JAFRI", "HANZALAH BIN MOHD FARUK", "ILHAM KAMIL BIN SHAMSUL BASRI", "MUHAMMAD FATEH BIN MOHD FAROUK", "MUHAMMAD FATEH ZAFRAN BIN MAT ROPINI", "MUHAMMAD HAZIQ RASZKI BIN NORSHAFARIZAN", "MUHAMMAD JAZLEE AKRIMIE BIN JOHARI", "MUHAMMAD QAYYIM BIN MOHD NAWAWI", "NUR HADIF IHSAN BIN ZUHAIDI", "RAFIQ SAFWAN BIN MOHD RAFA'AI", "ABDUL AZEEM BIN MOHD SHAHRIZAL", "LUKMANUL HAKIM BIN MOHD PADZIL", "MOHAMAD IZZUL HAZIQ BIN MOHAMAD BASRI", "MUHAMAD BIN NORSHAHIDAN", "MUHAMAD NURHAKIM BIN KHAIRUL", "MUHAMMAD ADAM DARWISY BIN MOHD FADZIL", "MUHAMMAD IRHAM FAHMI BIN MUHAMMAD", "MUHAMMAD NAJMI NA'IM BIN MOHD NASIR", "MUHAMMAD NAUFAL KHUZAIFAH BIN MOHD NOR SAIDI", "AHMAD AMJAD BIN HAIRULHISHAM", "AHMAD SYAFI BIN AHMAD SYARIFUDDIN", "DANISH HAZIQ BIN BASARUDIN", "MOHAMAD DINIE BIN MOHMAD FEISOL", "MUHAMAD KHIR FARISS BIN MD IDROSS", "MUHAMAD SHAUKI NAUFAL BIN NORZI", "MUHAMMAD ALIFF AIMAN BIN MOHD NORZAHARI", "MUHAMMAD AQEEL SIDDIQ BIN MD NOR IRWAN SHAH", "MUHAMMAD DARWISY BIN NOR MOHAMMAD", "MUHAMMAD FATHI BIN MUHAMMAD FAUZI", "MUHAMMAD FIKRI HAIKAL BIN MOHD SOFE", "MUHAMMAD LUQMAN AL-HAKIM BIN MOHD FIRDAUS", "MUHAMMAD SYAHMIL BIN ZULHASRI", "MUHAMMAD ZHAREEF HAKIM BIN AZAM", "MUHAMMAD ZHYA FAHMY BIN NAZMI"], "P": ["MELUR CINTA AMANI BINTI MOHD HAMIRAT", "NUR ADELIA KHALIDA BINTI AZKHAIREESHAR", "NUR AIESYAH HANNAH BINTI MUZAMMIL", "NUR QAIREEN AIISYA BINTI IQBAL HARITH", "NUR QAISARAH HANIS MUSFIRAH BINTI ROSDI", "NUR SUHA SAKINAH BINTI MOHD ROMEI", "NUR SYAQIRAH AUNI BINTI MOHAMAD AZLI", "NUR SYUHAIRAH NAA'IMAH BINTI MOHD YUSNI", "SOFHEA RAIHANI BINTI MOHD SYAHWEDI", "ASMA' MAHMUDAH BINTI JAZMIN", "AUNI FAQIHAH BINTI AMIZON", "NIK NUR AQILAH MAISARAH BINTI NIK MOHD ASRI", "NUR DINI BINTI SYAHERI", "NUR HANNAN BINTI MOHD FADHIL", "NUR IYLIA SOFIYA BINTI AHDZAN SADIQ", "NUR SAFFIYA BUSSAINA BINTI SANI", "NURAISYAH UMAIRAH ARISYA BINTI MD NAZRI", "NURUL SYAFEEQA BINTI RAHIM", "SUMAIYAH BINTI MOHD SYUIB", "SYIFA' BINTI ZAYD", "NUR ADELIA FATINI BINTI MOHD FIRDAUS", "NUR FARAHANI BINTI ABDUL RAZAK", "NURADRIANA DARWISYA BINTI MUHAMAD ABDUL HADI", "NURUL HAWA SALSABILLA BINTI ADNAN", "AISHAH DAMYA BINTI ANUAR SHUKRI", "ANFAL BINTI TAUFIK", "NUR ADILAH AMANI BINTI MOHD HAMBALI", "NUR AN NISA AMANI BINTI MOHD HAIRI NIZAM", "NUR AUFA HAFIYA BINTI ABDUL RAZAK", "NUR AUFA TAQIYAH BINTI ABDUL RAZAK", "NUR DHIYA AMANI BINTI MOHD NURHA", "NUR IMAN YUSRA BINTI MOHD RIZAL", "NUR QALEESYA UMAIRAH BINTI MOHD KHAIRUDIN", "NUR WIDAD BINTI AHMAD BADAWI", "NUR'AIN BATRISYIA BINTI NOOR MOHAMAD", "QURRATUL AIN NUR QASEH BINTI AHMAD MUNIR", "RAISHA ALIYA BINTI MOHD SHAHRIL FIKRI"]}, "5": {"L": ["HARITH BIN JAFNI", "MEGAT MUHAMMAD RAYYAN FIRDAUS BIN MEGAT KHAIRUL SUHAIRIL", "MUHAMMAD ADAM BUQHARI BIN MD RIZAL", "MUHAMMAD AIMAN HAKEEM BIN HAIDER", "MUHAMMAD ANIQ AQIL BIN AZIZI", "MUHAMMAD FAIZ FAHMI BIN MOHD FADLAN", "MUHAMMAD HAZIQ BIN BADEROL HISHAM", "MUHAMMAD NAQIB BIN YUSOF", "MUHAMMAD TAUFIQ HIDAYAT BIN NOOR LATIF", "MUHAMMAD UMAR DARWISY BIN MOHD ZAIRI", "QALIFF FIRDAUS BIN MOHD RUSLAN", "'UMAIR HAKIMI BIN MOHD HAIRI", "AFAF SAQAFI BIN HAMIZUL", "AHMAD FAWWAZ BIN MUHAMMAD HELMI", "AHMAD SYAHRUL HAZIEM BIN AHMAD ZULRISMAN", "FARIS SYAHZWAN BIN MOHD SHAH", "IMAN HASIF BIN SUNNY LEE", "MOHAMAD ASRI BIN MOHD NOOR", "MUHAMMAD ADAM BIN ADNAN", "MUHAMMAD ADLI AMSYAR BIN AHMAD RIDZUAN", "MUHAMMAD AMY SYAZWI BIN ISMAIL", "MUHAMMAD AQIL MUKHRIZ BIN MAT NASIR", "MUHAMMAD ASRI BIN ABD RAZAK", "MUHAMMAD DANIAL BIN AIZUDDIN", "MUHAMMAD HADIF BIN MUHAMMAD FAZLI", "MUHAMMAD HAZIQ BIN MOHAMAD FAIS", "MUHAMMAD IMTIYAZ FITRI BIN ROHAIZAN", "MUHAMMAD SAFWAN BIN ZABIDI", "MUSTAFA HABIBURRAHMAN BIN SHAHUL HAMID", "WAFIE ALIFF AKASHAH BIN MOHAMAD FARIZAN", "ADAM MUKHRIZ BIN MUHAMAD IRMAN SHARIF", "AFIQ IZZUDDIN BIN ISMAIL", "AHMAD ASYRAF BIN NORAZNI", "AHMAD DANIAL IRFAN BIN MOHD NIZAM", "AHMAD MALIQUE FIRAS BIN MUHAMMAD RIZAL", "MUHAMAD AMMAR WAFIQ BIN ABDUL KADIR NALONG", "MUHAMMAD AJMAL HAIKAL BIN MOHD SABRI", "MUHAMMAD AQIL HAMZI BIN AHAMAD ZAIDI", "MUHAMMAD ARIFF BIN ZUBIR", "MUHAMMAD QADRI IKHWAN BIN ARIEE", "MUHAMMAD UMAR HAZIQ BIN MOHD KHAIRI", "MUHAMMAD WAFIY BIN MOHD HAFIZIE", "ZAFRAN DANISH BIN ZULKEFFLE", "ADAM HAIKAL BIN SHAHIDAN", "AHMAD NAZRIN BIN MUHAMAD ASRI", "HAZIQ ZIKRI BIN HAMAZUL AZHAR", "MOHAMAD AQIL DZAKI BIN MOHD ZULHAMIROS", "MUHAMAD DARWISY BIN INFAKERUZI", "MUHAMMAD ADAM LUQMAN BIN NADHAR", "MUHAMMAD AMAL IZZUDDIN BIN MOHD NAIM", "MUHAMMAD HAZIM WAFIY BIN MUHAMMAD ANIS", "SYAMIL AIZAT BIN SAMSHURI"], "P": ["AISYA BATRISYIA BINTI HUSSAINI", "AMNI NAFEESA BINTI NORIZAN", "ARDINI BINTI ZAINUAR", "HANNAH SOFIYYAH BINTI MOHD SHAFFI", "IRDINA PUTERISYA BINTI NOOR AZMI", "NUR AIN SYAKIRA BINTI ISMAIL", "NUR HANA HUMAIRAA BINTI AYUB KHAN", "NUR QALEESYA YUSRA BINTI MOHAMAD HAZWAN", "SYAZA QAISARA BINTI MOHD SYUKRI", "ASSILA NUR QISTINA BINTI MOHAMAD SALEHAN", "FARAH NASUHA BINTI AZMI", "KHADIJAH NUR IZZAH BINTI SULAIMAN", "NUR AHLA BINTI AHMAD ARIFF", "NUR ALYA BATRISYIA BINTI YUSNIZAM", "NUR ARIANA BINTI ABDUL MALIK", "NUR AWATIF AUNI BINTI MUHAMMAD FARID", "NUR FASIHAH FIRZANAH BINTI ABDUL HAFIZ", "NUR HIDAYAH BINTI HISAMUDDIN", "NUR INSYIRAH BINTI ISMAIL", "NUR MARDHIAH ITQAN BINTI MOHAMAD RASHDEE", "NUR MARYAM MAHIRAH BINTI ZAIDI", "NURUL SYUHADA HUSNA BINTI MUHAMAD SHAHRIL", "UZMA BINTI MOHD NAEEM", "ZAREEN NUWAIRAH BINTI MOHD HANIF", "NUR 'IZZATI QISTINA BINTI ZUL IZZI", "NUR AIMIWILDANI BINTI ISMAIL", "NUR DURRATUL HIKMAH BINTI MOHD ADZRUL", "NUR FAKHIRA BINTI MUHAMMAD RUSDI", "NUR HUSNA BINTI MOHD HISHAMUDDIN", "NUR SHAZDIYANA BINTI SHAMIZAN", "NURKHALIESHA SALIHAH BINTI MOHAMAD SUBRI", "NURUL NAJYA NADIRA BINTI MOHD IZANI", "SAIYIDATUN NUR SOFIYA BINTI RIZALUDDIN", "SITI NUR BALQIS BINTI MOHD ROZI", "SYAIMA' BINTI ZAYD", "AMAL HANNANI BINTI ZULAZHAR", "AZIA BINTI ABDUL AZIZ", "NUHA FAWZAH BINTI AHMAD BAHARUDDIN", "NUR AINA FIRZANAH BINTI ABDUL WAHID", "NUR AISYAH HUMAIRA' BINTI MOHD AZLAN", "NUR ALEESYA HUMAIRA BINTI HALIM", "NUR ALIA BINTI MOHD ZAINI", "NUR ALYA FARISHA BINTI MUHAMAD BOKHARI", "NUR DELISHA SYAHINDAH BINTI MOHD NAZRI", "NUR FATIN ALISHA BINTI AZIZAN", "NUR RAYYAN 'AWATIFF BINTI HARISAH", "NURIN INSYIRAH IMANINA BINTI SHAH IZAD"]}}, "criteria": ["KETELITIAN GURU SEMASA MENYEMAK TUGASAN PELAJAR", "KEKERAPAN SEMAKAN", "KESESUAIAN TUGASAN DENGAN TAHAP PELAJAR", "KOMEN-KOMEN KONSTRUKTIF", "PEMBETULAN TERHADAP KESILAPAN MURID"], "scale": {"1": "Perlu Diperbaiki", "2": "Kurang Memuaskan", "3": "Memuaskan", "4": "Baik"}};
+const KEY="mmi_bsbl_2026_form";
+
+const $=id=>document.getElementById(id);
+function syncPrintInfo(){
+  const genderText=$("gender").value==="P"?"Perempuan":"Lelaki";
+  $("pTingkatan").textContent=$("tingkatan").value||"—";
+  $("pGender").textContent=genderText;
+  $("pGuru").textContent=$("guru").value||"—";
+  $("pSubjek").textContent=$("subjek").value||"—";
+  $("pCerapan").textContent=$("cerapan").value||"—";
+  $("pTajuk").textContent=$("tajuk").value||"—";
+  $("pPenyemak").textContent=$("penyemak").value||"—";
+  const d=$("tarikh").value;
+  $("pTarikh").textContent=d?new Date(d+"T00:00:00").toLocaleDateString("ms-MY"):"—";
+}
+
+function fillSelect(id, arr, placeholder){
+  const el=$(id); el.innerHTML="";
+  if(placeholder){const o=document.createElement("option");o.value="";o.textContent=placeholder;el.appendChild(o)}
+  arr.forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;el.appendChild(o)});
+}
+fillSelect("tingkatan",DATA.tingkatan);
+fillSelect("guru",DATA.guru,"-- Pilih guru --");
+fillSelect("subjek",DATA.subjek,"-- Pilih mata pelajaran --");
+fillSelect("cerapan",DATA.cerapan);
+$("tarikh").valueAsDate=new Date();
+["tingkatan","gender","guru","subjek","cerapan","tajuk","penyemak","tarikh"].forEach(id=>$(id).addEventListener("input",syncPrintInfo));
+["tingkatan","gender","guru","subjek","cerapan"].forEach(id=>$(id).addEventListener("change",syncPrintInfo));
+syncPrintInfo();
+
+function levelFromAvg(a){
+  if(!a) return "—";
+  if(a<1.5) return "LEMAH / PERLU DITINGKATKAN";
+  if(a<2.5) return "SEDERHANA";
+  if(a<3.5) return "BAIK";
+  return "CEMERLANG";
+}
+function currentLevel(s){
+  return DATA.scale[String(s)]||"";
+}
+function makeScoreSelect(value){
+  const s=document.createElement("select"); s.className="score-select";
+  for(let i=1;i<=4;i++){const o=document.createElement("option");o.value=i;o.textContent=i+" — "+DATA.scale[String(i)];s.appendChild(o)}
+  s.value=value||1;s.addEventListener("change",updateSummary);return s;
+}
+function renderStudents(){
+  const level=($("tingkatan").value||"").match(/^([1-5])/);
+  const t=level?level[1]:"1";
+  const g=$("gender").value;
+  const list=(DATA.students[t]&&DATA.students[t][g])||[];
+  const q=$("studentSearch").value.toLowerCase().trim();
+  const tbody=$("studentTable").querySelector("tbody"); tbody.innerHTML="";
+  for(let i=0;i<10;i++){
+    const tr=document.createElement("tr");
+    const td1=document.createElement("td");td1.textContent=i+1;
+    const td2=document.createElement("td");td2.className="name-cell";
+    const inp=document.createElement("input");inp.className="student-name";inp.placeholder="Pilih / taip nama pelajar";
+    inp.setAttribute("list","studentList"+t+g);
+    inp.value=list[i]||"";
+    if(q && !inp.value.toLowerCase().includes(q)) tr.style.display="none";
+    td2.appendChild(inp);
+    const td3=document.createElement("td");td3.appendChild(makeScoreSelect(1));
+    tr.append(td1,td2,td3);tbody.appendChild(tr);
+  }
+  let dl=document.getElementById("studentList"+t+g);
+  if(!dl){dl=document.createElement("datalist");dl.id="studentList"+t+g;document.body.appendChild(dl)}
+  dl.innerHTML=list.map(n=>`<option value="${escapeHtml(n)}"></option>`).join("");
+  updateSummary();
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function updateSummary(){
+  let total=0,count=0;
+  document.querySelectorAll(".student-name").forEach((n,i)=>{
+    if(n.value.trim()){count++;const s=document.querySelectorAll(".score-select")[i];total+=Number(s.value||0)}
+  });
+  const avg=count?total/count:0;
+  $("count").textContent=count;$("total").textContent=total;$("avg").textContent=avg.toFixed(2);$("level").textContent=levelFromAvg(avg);
+}
+function fillNext10(){
+  const t=($("tingkatan").value||"1").match(/^([1-5])/)[1],g=$("gender").value;
+  const list=DATA.students[t][g]||[];
+  document.querySelectorAll(".student-name").forEach((x,i)=>x.value=list[i]||"");
+  updateSummary();
+}
+function clearStudents(){document.querySelectorAll(".student-name").forEach(x=>x.value="");updateSummary()}
+function formData(){
+  return {
+    tingkatan:$("tingkatan").value,gender:$("gender").value,guru:$("guru").value,subjek:$("subjek").value,
+    cerapan:$("cerapan").value,tajuk:$("tajuk").value,penyemak:$("penyemak").value,tarikh:$("tarikh").value,
+    ulasan:$("ulasan").value,tandatangan:$("tandatangan").value,
+    students:[...document.querySelectorAll(".student-name")].map((x,i)=>({name:x.value,score:document.querySelectorAll(".score-select")[i].value}))
+  };
+}
+function saveForm(){localStorage.setItem(KEY,JSON.stringify(formData()));$("status").textContent="Borang telah disimpan dalam pelayar.";setTimeout(()=>$("status").textContent="",2500)}
+function loadForm(){
+  const d=JSON.parse(localStorage.getItem(KEY)||"null"); if(!d){return}
+  ["tingkatan","gender","guru","subjek","cerapan","tajuk","penyemak","tarikh","ulasan","tandatangan"].forEach(k=>{if($(k)&&d[k]!=null)$(k).value=d[k]});
+  renderStudents();
+  d.students?.forEach((x,i)=>{const n=document.querySelectorAll(".student-name")[i],s=document.querySelectorAll(".score-select")[i];if(n)n.value=x.name||"";if(s)s.value=x.score||1});
+  updateSummary();$("status").textContent="Borang terakhir telah dimuatkan.";setTimeout(()=>$("status").textContent="",2500)
+}
+function resetForm(){
+  if(!confirm("Reset borang ini?")) return;
+  localStorage.removeItem(KEY);$("tajuk").value="";$("penyemak").value="";$("ulasan").value="";$("tandatangan").value="";
+  $("tarikh").valueAsDate=new Date();renderStudents();
+}
+$("tingkatan").addEventListener("change",renderStudents);
+$("gender").addEventListener("change",renderStudents);
+$("studentSearch").addEventListener("input",renderStudents);
+
+DATA.criteria.forEach((c,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${i+1}</td><td>${escapeHtml(DATA.scale[String(i+1)]||"")}</td>`;});
+const sb=$("scaleBody");Object.entries(DATA.scale).forEach(([k,v])=>{const tr=document.createElement("tr");tr.innerHTML=`<td style="text-align:center">${k}</td><td>${escapeHtml(v)}</td>`;sb.appendChild(tr)});
+renderStudents();loadForm();
+</script>
+</body>
+</html>
