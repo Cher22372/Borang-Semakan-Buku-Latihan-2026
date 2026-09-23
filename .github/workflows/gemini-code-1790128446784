@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem e-Semak Buku Latihan MMI 2026</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #0284c7;
+            --bg: #f8fafc;
+            --border: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); margin: 0; padding: 20px; color: #1e293b; }
+
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        /* Control Panel */
+        .control-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .control-panel h2 { margin-top: 0; color: var(--primary); font-size: 1.2rem; }
+        .grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; color: #475569; }
+        .form-group select, .form-group input {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .btn-print {
+            grid-column: 1 / -1;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+        .btn-print:hover { background: var(--secondary); }
+
+        /* Printable Form Sheet */
+        .sheet {
+            background: white;
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .header { text-align: center; margin-bottom: 20px; text-transform: uppercase; }
+        .header h3 { margin: 0; font-size: 1.1rem; letter-spacing: 0.5px; }
+        .header h4 { margin: 5px 0 0 0; font-size: 1rem; color: #334155; }
+
+        .info-table, .data-table, .scale-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+        }
+
+        .info-table td { padding: 4px 8px; vertical-align: top; }
+        .info-table td.label { font-weight: bold; width: 22%; }
+        .info-table td.colon { width: 2%; }
+
+        .data-table th, .data-table td, .scale-table th, .scale-table td {
+            border: 1px solid #000;
+            padding: 6px 8px;
+            text-align: left;
+        }
+
+        .data-table th, .scale-table th { background-color: #f1f5f9; text-align: center; }
+        .text-center { text-align: center !important; }
+
+        .remarks-section { margin-top: 15px; font-size: 0.85rem; }
+        .signature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+            font-size: 0.85rem;
+        }
+
+        .legend {
+            margin-top: 20px;
+            border-top: 1px dashed #94a3b8;
+            padding-top: 10px;
+            font-size: 0.75rem;
+        }
+
+        /* Print Media Styles */
+        @media print {
+            body { background: white; padding: 0; }
+            .control-panel { display: none; }
+            .sheet { border: none; box-shadow: none; padding: 0; }
+            .data-table th, .scale-table th { background-color: #eee !important; -webkit-print-color-adjust: exact; }
+            @page { size: A4; margin: 1.5cm; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Panel Kawalan (Akan Tersembunyi Semasa Cetakan) -->
+    <div class="control-panel">
+        <h2>Panel Tetapan Borang Semakan MMI 2026</h2>
+        <div class="grid-form">
+            <div class="form-group">
+                <label>Tingkatan Kelas</label>
+                <select id="inputTingkatan" onchange="kemaskiniMurid()"></select>
+            </div>
+            <div class="form-group">
+                <label>Jantina Pelajar</label>
+                <select id="inputJantina" onchange="kemaskiniMurid()">
+                    <option value="L">Lelaki</option>
+                    <option value="P">Perempuan</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Nama Guru</label>
+                <select id="inputGuru" onchange="kemaskiniPaparan()"></select>
+            </div>
+            <div class="form-group">
+                <label>Mata Pelajaran</label>
+                <select id="inputMP" onchange="kemaskiniPaparan()"></select>
+            </div>
+            <div class="form-group">
+                <label>Pencerapan</label>
+                <select id="inputCerapan" onchange="kemaskiniPaparan()">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tajuk / Buku Latihan</label>
+                <input type="text" id="inputTajuk" value="Buku Latihan 1" oninput="kemaskiniPaparan()">
+            </div>
+            <div class="form-group">
+                <label>Nama Penyemak</label>
+                <input type="text" id="inputPenyemak" placeholder="Contoh: Pengetua / PK Pentadbiran" oninput="kemaskiniPaparan()">
+            </div>
+            <div class="form-group">
+                <label>Tarikh Semakan</label>
+                <input type="date" id="inputTarikh" onchange="kemaskiniPaparan()">
+            </div>
+            <button class="btn-print" onclick="window.print()">Cetak / Simpan PDF</button>
+        </div>
+    </div>
+
+    <!-- Borang Boleh Dicetak -->
+    <div class="sheet">
+        <div class="header">
+            <h3>MAAHAD AL MASHOOR AL ISLAMI</h3>
+            <h4>BORANG SEMAKAN BUKU LATIHAN PELAJAR</h4>
+        </div>
+
+        <table class="info-table">
+            <tr>
+                <td class="label">TINGKATAN</td><td class="colon">:</td><td id="lblTingkatan">-</td>
+                <td class="label">PENCERAPAN</td><td class="colon">:</td><td id="lblCerapan">-</td>
+            </tr>
+            <tr>
+                <td class="label">NAMA GURU</td><td class="colon">:</td><td id="lblGuru">-</td>
+                <td class="label">TAJUK / BUKU</td><td class="colon">:</td><td id="lblTajuk">-</td>
+            </tr>
+            <tr>
+                <td class="label">MATA PELAJARAN</td><td class="colon">:</td><td id="lblMP">-</td>
+                <td class="label">JUMLAH MURID</td><td class="colon">:</td><td id="lblJumlahMurid">10 / -</td>
+            </tr>
+        </table>
+
+        <!-- Sampel 10 Murid -->
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="width: 8%;">BIL.</th>
+                    <th>NAMA MURID</th>
+                    <th style="width: 25%;">SKOR (LEMAH/SEDERHANA/CEMERLANG)</th>
+                </tr>
+            </thead>
+            <tbody id="tbMurid">
+                <!-- Dijana melalui JS -->
+            </tbody>
+        </table>
+
+        <!-- Penilaian Skala Kriteria -->
+        <table class="scale-table">
+            <thead>
+                <tr>
+                    <th style="width: 8%;">BIL.</th>
+                    <th style="width: 15%;">SKALA (1-4)</th>
+                    <th>PENYATAAN EVALUASI</th>
+                </tr>
+            </thead>
+            <tbody id="tbSkala">
+                <!-- Dijana melalui JS -->
+            </tbody>
+        </table>
+
+        <div class="remarks-section">
+            <strong>ULASAN PENYEMAK:</strong>
+            <div style="border-bottom: 1px dotted #000; height: 24px; margin-top: 4px;"></div>
+            <div style="border-bottom: 1px dotted #000; height: 24px; margin-top: 4px;"></div>
+        </div>
+
+        <div class="signature-grid">
+            <div>
+                <p><strong>NAMA PENYEMAK:</strong> <span id="lblPenyemak">-</span></p>
+                <p><strong>TARIKH:</strong> <span id="lblTarikh">-</span></p>
+            </div>
+            <div style="text-align: right;">
+                <p><strong>TANDATANGAN PENYEMAK:</strong></p>
+                <br><br>
+                <p>___________________________</p>
+            </div>
+        </div>
+
+        <div class="legend">
+            <strong>PETUNJUK SKALA:</strong> 1: Perlu Diperbaiki | 2: Kurang Memuaskan | 3: Memuaskan | 4: Baik
+        </div>
+    </div>
+</div>
+
+<script>
+// Data asal dari fail Excel MMI 2026
+const dataTingkatan = ["1 IS", "1 IN", "1K", "1S", "2 IS", "2 IN", "2K", "2S", "3 IS", "3 IN", "3K", "3S", "4 AB", "4 AK", "4 AJ", "4 AF", "5 AB", "5 AK", "5 AJ", "5 AF", "STAM"];
+
+const dataGuru = [
+    "SITI ALHA BINTI HJ RAMLI", "SOBRI BIN MD NOR", "ABDUL RASHEED BIN NAGOORGANY", "MOHD ZAMRI BIN NOH@MOHD NOH",
+    "MOHD SHUKRI BIN ABDUL RAZAK", "IBNI HAJAR BIN ABDUL WAHAB", "ZALINA BINTI MD ZAIN", "AZRIN BINTI SAIDIN",
+    "SUHAIDA BINTI ABDULLAH", "NORMAH BINTI MOHD AFFINDI", "NAZRINAH BINTI NAHOOR MEERA", "ZARINA BINTI YUNUS",
+    "ABDUL AZIM BIN ABD KADIR", "ABDUL HAFIZ BIN ISMAIL", "AZHARI BIN AHMAD", "AZLIANA BINTI MD ZAID",
+    "CHE MOHD FAKHRUL RAHIMI BIN RASIT", "NOR FARIZAH HANIM BINTI OMAR", "ILI SUHAILI BINTI ISHAK", "IZZATY BINTI ISHAK",
+    "JUSMIRA AIDA BINTI JOHARI", "KHAIRUL AZHA BIN HALIM", "FARAH AUNI BINTI MOHD KHOIRI", "MARDIANA BINTI SHAHRIL",
+    "MOHD HIJAZI BIN ABU HASSAN", "MUHAMMAD AMIRUL BIN ABDUL RAHMAN", "MUHAMMAD FAISAL BIN ABD RAMLAN", "MUHAMMAD FAIZ BIN RAMLI",
+    "MUHAMMAD HAMZI BIN JAMALUDIN", "MUHAMMAD NASARUDDIN BIN AZMI", "NADIA HANIM BINTI JAAFAR", "NOOR ASLIDA BINTI RAMLI",
+    "NOOR HIDAYAH BINTI MOHAMED NOR", "NOORUL SYUHADA BINTI NOORDIN", "NORAZILA BINTI RAMLI", "FATIMAH AZ-ZAHRA BINTI HASSAN",
+    "NUR AIN SHUHADA BINTI MOHD ZAMRI", "NUR IZZAH BINTI AWANG", "NUR WARDAH BINTI HAMZAH", "NURUL FARHANA BINTI YAHAYA",
+    "NURULIMAN BINTI ZULHISHAM", "ROHIZA BINTI MAT RASHID", "ROSNIZA BINTI AB RAZAK", "FATIN NABILAH BINTI ZAINUDDIN",
+    "SITI ESHAH BINTI HUSSAIN", "SITI NABILAH BINTI HASSAN", "SITI NOR ADILA BINTI DAUD", "SITI NORAINI BINTI MOHD NOR",
+    "SYAZWANI BINTI ZAKARIYA", "NUR'AIN SYAFIQAH BINTI AZIZI", "NUR AFIQAH BINTI HISHAMUDIN", "NOORFARHANA BINTI ABDULLAH",
+    "MOHAMAMAD AMIN BIN MOHD SHOKRI"
+];
+
+const dataMP = ["BM", "BI", "SEJ", "SN", "MM", "MT", "GEO", "PA", "PERNIAGAAN", "FZK", "KIMIA", "BIO", "UAD", "ASY", "LAM", "MUI", "AWB", "QT", "PSV", "FEQAH FARAID", "TAUHID MANTIK", "TAFSIR ULUMUHU", "HADIS MUSTOLAH", "NAHU SOROF", "INSYAK MUTOLAAH", "ADAB NUSUS", "ARUDH QAFIAH", "BALAGHAH", "PJPK", "ASK", "RBT", "KKQ"];
+
+const dataPenyataan = [
+    "KETELITIAN GURU SEMASA MENYEMAK TUGASAN PELAJAR",
+    "KEKERAPAN SEMAKAN",
+    "KESESUAIAN TUGASAN DENGAN TAHAP PELAJAR",
+    "KOMEN-KOMEN KONSTRUKTIF",
+    "PEMBETULAN TERHADAP KESILAPAN MURID"
+];
+
+// Contoh Data Pelajar Mengikut Tingkatan & Jantina
+const sampleMurid = {
+    "1 IS_L": ["AHMAD NAQIUDDIN BIN MUHAMAD ASRI", "AHMAD SYAUQI BIN DAUD", "ALI ARRAYHAN MUHAMMAD BIN MUHAMMAD FUAD AZFAR", "AMMAR RAHIMI BIN SABBERI", "AZFAR NASRULLAH BIN NOR AZAM", "FAHEEM YUNUS BIN KHAIRUL HAKIMIN", "FAQEH NAS'RULLAH HUSSAYN BIN MOHAMAD HAFIZ", "HAFIY NUR IMAN BIN NOOR AZMAN", "IZZ WAFIY MIKHAIL BIN MOHD TARMIZI", "MOHAMAD ARIQ DZAKWAN BIN MOHD ZULHAMIROS"],
+    "1 IS_P": ["AISHA NABILAH IRDINA BINTI NASRUL AFNAN", "ALISHA MARDHIYAH BINTI ZAIHASNAN", "ALYA ZAHRA BINTI ROZAIDEE", "AUNI HUMAIRA BINTI ROZAINI", "AUNI NADRA BINTI MOHD HAIRUS IZMAN", "DELISHA AMANDA BINTI MUHAMMAD FAIZAL", "DHIA DAMIA BINTI MOHD SUKRI", "FIRZANAH SAFIYYAH BINTI MOHD FIRDAUS", "HANA WAFIQAH BINTI MOHAMED BANDENAWAS", "HUMAIRA BINTI ZOL EFFENDI"]
+};
+
+// Inisialisasi Pilihan Dropdown
+function init() {
+    const selTingkatan = document.getElementById("inputTingkatan");
+    dataTingkatan.forEach(t => selTingkatan.add(new Option(t, t)));
+
+    const selGuru = document.getElementById("inputGuru");
+    dataGuru.forEach(g => selGuru.add(new Option(g, g)));
+
+    const selMP = document.getElementById("inputMP");
+    dataMP.forEach(m => selMP.add(new Option(m, m)));
+
+    // Tarikh hari ini
+    document.getElementById("inputTarikh").valueAsDate = new Date();
+
+    kemaskiniMurid();
+}
+
+function kemaskiniMurid() {
+    const tingkatan = document.getElementById("inputTingkatan").value;
+    const jantina = document.getElementById("inputJantina").value;
+    const key = `${tingkatan}_${jantina}`;
+
+    // Gunakan sampel data jika wujud, atau jana placeholder
+    let senarai = sampleMurid[key] || Array.from({length: 10}, (_, i) => `MURID ${i+1} (${tingkatan} ${jantina === 'L' ? 'LELAKI' : 'PEREMPUAN'})`);
+
+    const tb = document.getElementById("tbMurid");
+    tb.innerHTML = "";
+    senarai.slice(0, 10).forEach((nama, index) => {
+        tb.innerHTML += `
+            <tr>
+                <td class="text-center">${index + 1}</td>
+                <td>${nama}</td>
+                <td></td>
+            </tr>
+        `;
+    });
+
+    // Kemaskini Jadual Skala
+    const tbSkala = document.getElementById("tbSkala");
+    tbSkala.innerHTML = "";
+    dataPenyataan.forEach((penyataan, index) => {
+        tbSkala.innerHTML += `
+            <tr>
+                <td class="text-center">${index + 1}</td>
+                <td></td>
+                <td>${penyataan}</td>
+            </tr>
+        `;
+    });
+
+    kemaskiniPaparan();
+}
+
+function kemaskiniPaparan() {
+    document.getElementById("lblTingkatan").innerText = document.getElementById("inputTingkatan").value;
+    document.getElementById("lblGuru").innerText = document.getElementById("inputGuru").value;
+    document.getElementById("lblMP").innerText = document.getElementById("inputMP").value;
+    document.getElementById("lblCerapan").innerText = document.getElementById("inputCerapan").value;
+    document.getElementById("lblTajuk").innerText = document.getElementById("inputTajuk").value;
+    document.getElementById("lblPenyemak").innerText = document.getElementById("inputPenyemak").value || "-";
+    document.getElementById("lblTarikh").innerText = document.getElementById("inputTarikh").value || "-";
+}
+
+window.onload = init;
+</script>
+
+</body>
+</html>
