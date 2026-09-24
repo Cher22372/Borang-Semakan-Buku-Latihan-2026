@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borang Semak Buku Latihan MMI 2026</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+            text-transform: uppercase;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .info-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .info-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .info-group input, .info-group select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #000;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .action-btn {
+            text-align: center;
+            margin-top: 30px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        /* Pengaturan Cetak (Print) agar butang tidak ikut tercetak */
+        @media print {
+            .no-print {
+                display: none;
+            }
+            .container {
+                border: none;
+                padding: 0;
+            }
+            .info-group input, .info-group select {
+                border: none;
+                border-bottom: 1px solid #000;
+                border-radius: 0;
+                padding: 2px;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Borang Semak Buku Latihan MMI 2026</h2>
+
+    <div class="info-grid">
+        <div class="info-group">
+            <label for="namaGuru">Nama Guru:</label>
+            <select id="namaGuru">
+                <option value="">-- Sila Pilih Nama Guru --</option>
+                <option value="SITI ALHA BINTI HJ RAMLI">SITI ALHA BINTI HJ RAMLI</option>
+                <option value="SOBRI BIN MD NOR">SOBRI BIN MD NOR</option>
+                <option value="ABDUL RASHEED BIN NAGOORGANY">ABDUL RASHEED BIN NAGOORGANY</option>
+                <option value="MOHD ZAMRI BIN NOH@MOHD NOH">MOHD ZAMRI BIN NOH@MOHD NOH</option>
+                <option value="MOHD SHUKRI BIN ABDUL RAZAK">MOHD SHUKRI BIN ABDUL RAZAK</option>
+                <option value="IBNI HAJAR BIN ABDUL WAHAB">IBNI HAJAR BIN ABDUL WAHAB</option>
+                <option value="ZALINA BINTI MD ZAIN">ZALINA BINTI MD ZAIN</option>
+                <option value="AZRIN BINTI SAIDIN">AZRIN BINTI SAIDIN</option>
+                <option value="SUHAIDA BINTI ABDULLAH">SUHAIDA BINTI ABDULLAH</option>
+                <option value="NORMAH BINTI MOHD AFFINDI">NORMAH BINTI MOHD AFFINDI</option>
+                <option value="NAZRINAH BINTI NAHOOR MEERA">NAZRINAH BINTI NAHOOR MEERA</option>
+                <option value="ZARINA BINTI YUNUS">ZARINA BINTI YUNUS</option>
+                <option value="ABDUL AZIM BIN ABD KADIR">ABDUL AZIM BIN ABD KADIR</option>
+            </select>
+        </div>
+        
+        <div class="info-group">
+            <label for="mataPelajaran">Mata Pelajaran:</label>
+            <select id="mataPelajaran">
+                <option value="">-- Sila Pilih Mata Pelajaran --</option>
+                <option value="BM">BM</option>
+                <option value="BI">BI</option>
+                <option value="SEJ">SEJ</option>
+                <option value="SN">SN</option>
+                <option value="MM">MM</option>
+                <option value="MT">MT</option>
+                <option value="GEO">GEO</option>
+                <option value="PA">PA</option>
+                <option value="PERNIAGAAN">PERNIAGAAN</option>
+                <option value="FZK">FZK</option>
+                <option value="KIMIA">KIMIA</option>
+                <option value="BIO">BIO</option>
+                <option value="UAD">UAD</option>
+                <option value="ASY">ASY</option>
+            </select>
+        </div>
+        
+        <div class="info-group">
+            <label for="kelas">Kelas / Tingkatan:</label>
+            <select id="kelas">
+                <option value="">-- Sila Pilih Kelas --</option>
+                <option value="1 IN">1 IN</option>
+                <option value="1 IS">1 IS</option>
+                <option value="1K">1K</option>
+                <option value="1S">1S</option>
+                <option value="2 IN">2 IN</option>
+                <option value="2 IS">2 IS</option>
+                <option value="2K">2K</option>
+                <option value="2S">2S</option>
+                <option value="3 IN">3 IN</option>
+                <option value="3 IS">3 IS</option>
+                <option value="3K">3K</option>
+                <option value="3S">3S</option>
+                <option value="4 AB">4 AB</option>
+                <option value="4 AK">4 AK</option>
+                <option value="4 AF">4 AF</option>
+                <option value="4 AJ">4 AJ</option>
+            </select>
+        </div>
+        
+        <div class="info-group">
+            <label for="jumlahPelajar">Jumlah Pelajar:</label>
+            <!-- Ruang ini sengaja dikosongkan -->
+            <input type="number" id="jumlahPelajar" value="" placeholder="">
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%; text-align: center;">Bil</th>
+                <th style="width: 40%;">Nama Pelajar</th>
+                <th style="width: 20%;">Tarikh Hantar</th>
+                <th style="width: 15%; text-align: center;">Status</th>
+                <th style="width: 20%;">Catatan</th>
+            </tr>
+        </thead>
+        <tbody id="senaraiPelajar">
+            <!-- Baris jadual disediakan untuk diisi -->
+            <tr>
+                <td style="text-align: center;">1</td>
+                <td><input type="text" style="width: 95%; border: none; background: transparent;"></td>
+                <td><input type="date" style="width: 90%; border: none; background: transparent;"></td>
+                <td style="text-align: center;">
+                    <select style="border: none; background: transparent;">
+                        <option value="Hantar">Hantar</option>
+                        <option value="Belum">Belum</option>
+                    </select>
+                </td>
+                <td><input type="text" style="width: 95%; border: none; background: transparent;"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">2</td>
+                <td><input type="text" style="width: 95%; border: none; background: transparent;"></td>
+                <td><input type="date" style="width: 90%; border: none; background: transparent;"></td>
+                <td style="text-align: center;">
+                    <select style="border: none; background: transparent;">
+                        <option value="Hantar">Hantar</option>
+                        <option value="Belum">Belum</option>
+                    </select>
+                </td>
+                <td><input type="text" style="width: 95%; border: none; background: transparent;"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">3</td>
+                <td><input type="text" style="width: 95%; border: none; background: transparent;"></td>
+                <td><input type="date" style="width: 90%; border: none; background: transparent;"></td>
+                <td style="text-align: center;">
+                    <select style="border: none; background: transparent;">
+                        <option value="Hantar">Hantar</option>
+                        <option value="Belum">Belum</option>
+                    </select>
+                </td>
+                <td><input type="text" style="width: 95%; border: none; background: transparent;"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="action-btn no-print">
+        <button onclick="window.print()">Simpan sebagai PDF</button>
+    </div>
+</div>
+
+</body>
+</html>
